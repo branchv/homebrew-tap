@@ -13,10 +13,10 @@ jobs:
       pull-requests: write
     steps:
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@main
 
       - name: Set up git
-        uses: Homebrew/actions/git-user-config@master
+        uses: Homebrew/actions/git-user-config@main
 
       - name: Pull bottles
         run: brew pr-pull --debug --tap="$GITHUB_REPOSITORY" --workflows=ci.yaml "$PULL_REQUEST"
@@ -25,7 +25,7 @@ jobs:
           PULL_REQUEST: ${{ github.event.pull_request.number }}
 
       - name: Push commits
-        uses: Homebrew/actions/git-try-push@master
+        uses: Homebrew/actions/git-try-push@main
         with:
           token: ${{ github.token }}
           branch: main
