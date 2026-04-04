@@ -5,5 +5,6 @@
   "kubectx": "homebrew/core",
   "powerlevel10k": "homebrew/core",
   "pulsarctl": "homebrew/core",
-  "ty": "homebrew/core"
+  "ty": "homebrew/core",
+  "zsh-fzf-tab": "homebrew/core/fzf-tab"
 }
