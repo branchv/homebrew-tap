@@ -1,10 +1,16 @@
 class Rustpython < Formula
   desc "Python Interpreter written in Rust"
   homepage "https://rustpython.github.io"
-  url "https://github.com/RustPython/RustPython/archive/refs/tags/2025-08-18-main-43.tar.gz"
-  sha256 "389a62912475f459ab7da083c63f963523098e18a602105a32b32ab3dbcc01e7"
+  url "https://github.com/RustPython/RustPython/archive/refs/tags/0.5.0.tar.gz"
+  sha256 "6fa2bfd6d3a6c0ecb2aae216552ba24ad263546198c8a7b0c03c8111b6389d9c"
   license "MIT"
+  version_scheme 1
   head "https://github.com/RustPython/RustPython.git", branch: "main"
+
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
 
   bottle do
     root_url "https://github.com/branchv/homebrew-tap/releases/download/rustpython-2025-08-18"
@@ -19,8 +25,8 @@ class Rustpython < Formula
 
   def install
     # Avoid references to Homebrew shims
-    inreplace "vm/build.rs", "std::env::vars_os()",
-                             'std::env::vars_os().filter(|(k, _)| k != "PATH" && k != "RUSTC_WRAPPER")'
+    inreplace "crates/vm/build.rs", "std::env::vars_os()",
+                                    'std::env::vars_os().filter(|(k, _)| k != "PATH" && k != "RUSTC_WRAPPER")'
 
     ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
     system "cargo", "install", "--features=ssl", *std_cargo_args
