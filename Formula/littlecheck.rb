@@ -1,11 +1,11 @@
 class Littlecheck < Formula
-  include Language::Python::Shebang
+  include Language::Python::Virtualenv
 
   desc "Command-line tool tester"
   homepage "https://github.com/ridiculousfish/littlecheck"
-  url "https://github.com/ridiculousfish/littlecheck/archive/ef94a661b8bd8878f4b1136b6d1963119cf67c04.tar.gz"
-  version "0.1.1"
-  sha256 "524e76987f3cfd4e8c951b4063a7866cbbd05412457fb660ededdf9ceb70de65"
+  url "https://github.com/ridiculousfish/littlecheck/archive/c44c157d3666b9a447e20977eec6eb4bd2a0c304.tar.gz"
+  version "0.1.2"
+  sha256 "de92d27430e1649366952363c7606e390a04d53961b1ca30c68d4e1ab18d1179"
   head "https://github.com/ridiculousfish/littlecheck.git", branch: "master"
 
   bottle do
@@ -14,11 +14,10 @@ class Littlecheck < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "9bcc160474db487ba31107f614ce227e9aee627126d25b180b7b9a28704fab72"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.14"
 
   def install
-    rewrite_shebang detected_python_shebang, "littlecheck/littlecheck.py"
-    bin.install "littlecheck/littlecheck.py" => "littlecheck"
+    virtualenv_install_with_resources
   end
 
   test do
