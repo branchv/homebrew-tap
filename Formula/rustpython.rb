@@ -13,9 +13,9 @@ class Rustpython < Formula
   end
 
   bottle do
-    root_url "https://github.com/branchv/homebrew-tap/releases/download/rustpython-2025-08-18"
-    sha256 cellar: :any, arm64_sequoia: "396684926b0322f7eae17b3c9b3991f7298e1102f10440e9d47037a4e01407c3"
-    sha256               x86_64_linux:  "3d1ee5a8260c980b801fef1d9f86d0f96fb8072ac837c5d00e6a973dcd2061f4"
+    root_url "https://github.com/branchv/homebrew-tap/releases/download/rustpython-0.5.0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c845ceed9733e052e38a7769cde86669a1fd8cba36f79c6f62cbfd3506379156"
+    sha256                               x86_64_linux:  "05fddefe63b2e018883935a6beb8c232cd17fb25b3129fa85f25ee8022cfd9db"
   end
 
   depends_on "rust" => :build
