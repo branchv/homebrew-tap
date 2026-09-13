@@ -7,7 +7,7 @@ if [ -z "${HOMEBREW_GITHUB_API_TOKEN:-}" ] && ! gh auth status &>/dev/null; then
     echo "  export HOMEBREW_GITHUB_API_TOKEN=\$(gh auth token)"
     exit 1
 fi
-export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
+export GITHUB_TOKEN="${HOMEBREW_GITHUB_API_TOKEN:-}"
 export GH_REPO="Homebrew/homebrew-core"
 command -v diffoscope >/dev/null || brew install diffoscope
 command -v gum >/dev/null || brew install gum

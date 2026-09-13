@@ -13,7 +13,7 @@ next="$(brew which-formula python3 2>/dev/null| cut -d@ -f2)"
 curr=$(echo "$next - 0.01" | bc)
 branch="python@$next-$formula"
 message="$formula: migrate to \`python@$next\`"
-export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN"
+export GITHUB_TOKEN="${HOMEBREW_GITHUB_API_TOKEN:-}"
 
 # Check for duplicates
 duplicate=$(gh pr list --search="in:title \"$message\"" --state=all --limit=1 --json=number --jq='.[].number')

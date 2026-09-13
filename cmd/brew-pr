@@ -13,7 +13,7 @@ if [ -z "${HOMEBREW_GITHUB_API_TOKEN:-}" ] && ! gh auth status &>/dev/null; then
     exit 1
 fi
 
-export GITHUB_TOKEN="$HOMEBREW_GITHUB_API_TOKEN" EDITOR="$HOMEBREW_EDITOR"
+export GITHUB_TOKEN="${HOMEBREW_GITHUB_API_TOKEN:-}" EDITOR="${HOMEBREW_EDITOR:-}"
 
 git checkout -b "$branch"
 
