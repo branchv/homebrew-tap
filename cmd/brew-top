@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DEP=""
+LIMIT=10
+DAYS=30d
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -n|--limit)
+      LIMIT="$2"
+      shift 2
+      ;;
+    --days|-d)
+      DAYS="$2"
+      shift 2
+      ;;
+    -h|--help)
+      echo "Usage: brew top [dependency] [-n <count>] [-d <30d|90d|365d>]"
+      echo ""
+      echo "Examples:"
+      echo "  brew top            # Top packages overall"
+      echo "  brew top python     # Top packages depending only on python"
+      echo "  brew top node -n 20 # Top 20 depending only on node"
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1" >&2
+      exit 1
+      ;;
+    *)
+      DEP="$1"
+      shift
+      ;;
+  esac
+done
+
+curl -s "https://formulae.brew.sh/api/analytics/install-on-request/${DAYS}.json" \
+        "https://formulae.brew.sh/api/formula.json" | jq -r -s \
+  --arg dep "$DEP" '
+  (.[0].items | INDEX(.formula)) as $analytics |
+  .[1][] |
+  select($dep == "" or ((.dependencies | length == 1) and (.dependencies[0] | test("^" + $dep + "(@|$)")))) |
+  [
+    (($analytics[.name].count // "0") | gsub(",";"") | tonumber),
+    .name
+  ] | @tsv
+' | sort -rn | head -n "$LIMIT"
